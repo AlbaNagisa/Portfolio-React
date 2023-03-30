@@ -1,3 +1,4 @@
+import Particle from "./components/particle";
 import "./globals.css";
 
 export const metadata = {
@@ -12,8 +13,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="w-screen h-screen flex bg-gradient-to-tl from-[#091645] to-[#150838]">
+      <body className="w-screen min-h-screen flex bg-gradient-to-b from-[#091645] to-[#2a2575]">
         {children}
+        <Particle />
       </body>
     </html>
   );

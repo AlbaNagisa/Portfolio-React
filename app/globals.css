@@ -1,3 +1,34 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* .bg {
+  background-image: url("../public/IMG_0143.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0% 100%;
+} */
+
+html {
+  font-size: 100%;
+}
+
+@font-face {
+  font-family: "Impact"; /*Can be any text*/
+  src: local("Impact"), url(../app/fonts/impact.ttf) format("truetype");
+}
+@font-face {
+  font-family: "Poppins"; /*Can be any text*/
+  src: local("Poppins"),
+    url(../app/fonts/Poppins-ExtraBold.ttf) format("truetype");
+}
+
+@layer base {
+  html {
+    font-family: Poppins, sans-serif;
+  }
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
