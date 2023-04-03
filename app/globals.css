@@ -2,12 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* .bg {
+.bg {
   background-image: url("../public/IMG_0143.png");
-  background-repeat: no-repeat;
+  background-repeat: repeat-y;
   background-size: cover;
   background-position: 0% 100%;
-} */
+  background-attachment: fixed;
+}
 
 html {
   font-size: 100%;
