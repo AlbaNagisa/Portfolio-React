@@ -18,12 +18,12 @@ export default function Card(props: Props) {
           "linear-gradient(208.84deg, rgba(9, 21, 67, 0.5) 17.75%, #101B44 74.01%)",
       }}
       id="card"
-      className="w-[25%] h-fit m-6 rounded-3xl text-white flex flex-col gap-6"
+      className="w-[25%] h-fit m-6 rounded-3xl text-white flex flex-col gap-6 shadow-[-26px_26px_15px_-5px_rgba(0,0,0,0.1)]"
     >
       <div id="image">
         <Image
           alt="img"
-          className="aspect-[16/9]"
+          className="aspect-[16/9] rounded-t-3xl"
           src={props.images[0]}
           width={1920}
           height={1080}
