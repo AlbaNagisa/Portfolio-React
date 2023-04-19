@@ -5,6 +5,7 @@ interface Props {
   title: string;
   desc: string;
   images: string[];
+  id: string;
 }
 
 export default function Card(props: Props) {
@@ -19,6 +20,9 @@ export default function Card(props: Props) {
       }}
       id="card"
       className="w-[25%] h-fit m-6 rounded-3xl text-white flex flex-col gap-6 shadow-[-26px_26px_15px_-5px_rgba(0,0,0,0.1)]"
+      onClick={() => {
+        console.log(props.id);
+      }}
     >
       <div id="image">
         <Image

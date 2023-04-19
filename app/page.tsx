@@ -20,7 +20,7 @@ export default function Page() {
     fetch("http://localhost:5050/api/projects/")
       .then((res) => res.json())
       .then((value) => {
-        //setIsLoading(false);
+        setIsLoading(false);
         setData(value);
       });
   });
@@ -51,6 +51,7 @@ export default function Page() {
             title={cardData.title}
             images={cardData.images}
             desc={cardData.body}
+            id={cardData.id}
           />
         );
       });
@@ -60,7 +61,6 @@ export default function Page() {
     <div className="flex h-screen w-screen flex-col ">
       <div className="flex min-h-[100%] mt-16 mr-26 ml-32 flex-col">
         <Container width="20%" height="10%" title="AlbaNagisa" />
-
         <div className="flex w-full h-fit mt-24">
           <div className=" flex flex-wrap min-h-screen justify-around w-[calc(100%-8rem)] ">
             {showCard()}
