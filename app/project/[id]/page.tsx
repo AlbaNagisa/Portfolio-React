@@ -12,6 +12,7 @@ interface pageProps {
 const Page: FC<pageProps> = ({ params }) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   useEffectOnce(() => {
     setIsLoading(true);
@@ -20,8 +21,13 @@ const Page: FC<pageProps> = ({ params }) => {
       .then((value) => {
         setIsLoading(false);
         setData(value);
-        console.log(value);
+      })
+      .catch((err) => {
+        setIsError(true);
       });
+    if (typeof data == "string" || isError || data.length == 0) {
+      throw new Error("Something went wrong");
+    }
   });
   const showDetails = () => {
     if (isLoading) {

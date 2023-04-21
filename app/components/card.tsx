@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Props {
   title: string;
@@ -13,16 +14,14 @@ export default function Card(props: Props) {
     return str.slice(0, 60) + "...";
   }
   return (
-    <div
+    <Link
+      href={"/project/" + props.id}
       style={{
         background:
           "linear-gradient(208.84deg, rgba(9, 21, 67, 0.5) 17.75%, #101B44 74.01%)",
       }}
       id="card"
       className="w-[25%] h-fit m-6 rounded-3xl text-white flex flex-col gap-6 shadow-[-26px_26px_15px_-5px_rgba(0,0,0,0.1)]"
-      onClick={() => {
-        console.log(props.id);
-      }}
     >
       <div id="image">
         <Image
@@ -43,6 +42,6 @@ export default function Card(props: Props) {
           </h1>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
