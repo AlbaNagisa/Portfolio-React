@@ -1,16 +1,16 @@
 "use client";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { ThreeCircles } from "react-loader-spinner";
-import { useEffectOnce } from "usehooks-ts";
 import BackArrowIcon from "../../../public/back-arrow-icon.svg";
 import Image from "next/image";
-import { redirect } from "next/dist/server/api-utils";
 import Link from "next/link";
 
 import { Octokit } from "octokit";
+import { OctokitResponse } from "@octokit/types";
 
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
+  userAgent: "skylight v1",
 });
 
 interface pageProps {
@@ -29,23 +29,37 @@ interface dataT {
 
 const Page: FC<pageProps> = ({ params }) => {
   const [data, setData] = useState<dataT | null>(null);
-  const [githubData, setGithubData] = useState<null>(null);
+  const [githubData, setGithubData] = useState<void | OctokitResponse<
+    { [key: string]: number | undefined },
+    200
+  >>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  useEffectOnce(() => {
-    setIsLoading(true);
-    fetch(`http://localhost:5050/api/projects/${params.id}`)
-      .then((res) => res.json())
-      .then((value) => {
-        setIsLoading(false);
-        setData(value);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    if (data?.code === 404) {
-      throw new Error("Not found");
+
+  useEffect(() => {
+    async function onLoad() {
+      await octokit
+        .request("GET /repos/{owner}/{repo}/languages", {
+          owner: "AlbaNagisa",
+          repo: "anemyapp",
+          headers: {
+            "X-GitHub-Api-Version": "2022-11-28",
+          },
+        })
+        .then((res) => setGithubData(res))
+        .catch((err) => console.log(err));
+      await fetch(`http://localhost:5050/api/projects/${params.id}`)
+        .then((res) => res.json())
+        .then((value) => {
+          setIsLoading(false);
+          setData(value);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-  });
+    setIsLoading(true);
+    onLoad();
+  }, [params.id]);
 
   const showDetails = () => {
     if (isLoading) {
@@ -66,6 +80,7 @@ const Page: FC<pageProps> = ({ params }) => {
         </div>
       );
     }
+
     //  top left of my page i want Go Back clickable div
     return (
       <div className="flex flex-col h-full w-full">
@@ -82,11 +97,14 @@ const Page: FC<pageProps> = ({ params }) => {
           </div>
         </Link>
         <div className="flex flex-col h-[auto] w-[auto] items-center justify-center">
-          salut
+          <h1></h1>
         </div>
       </div>
     );
   };
+  if (data?.code === 404) {
+    throw new Error("Not found");
+  }
   return (
     <div className="flex h-screen w-screen flex-col ">{showDetails()}</div>
   );

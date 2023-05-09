@@ -1,8 +1,7 @@
 "use client";
-import React, { useState } from "react";
-import Container from "./components/container";
-import Card from "./components/card";
-import { useEffectOnce } from "usehooks-ts";
+import React, { useEffect, useState } from "react";
+import Container from "../components/container";
+import Card from "../components/card";
 import { ThreeCircles } from "react-loader-spinner";
 
 export default function Page() {
@@ -15,7 +14,7 @@ export default function Page() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffectOnce(() => {
+  useEffect(() => {
     setIsLoading(true);
     fetch("http://localhost:5050/api/projects/")
       .then((res) => res.json())
@@ -23,7 +22,7 @@ export default function Page() {
         setIsLoading(false);
         setData(value);
       });
-  });
+  }, []);
 
   const showCard = () => {
     if (isLoading) {

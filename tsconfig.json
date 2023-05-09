@@ -29,7 +29,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "build/types/**/*.ts",
-    "public/data.js"
+    "src/public/data.js"
   ],
   "exclude": ["node_modules"]
 }
