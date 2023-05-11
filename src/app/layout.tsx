@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
-      <body className="w-screen min-h-screen flex bg-gradient-to-b from-[#091645] to-[#2a2575] bg">
+      <body className="w-screen min-h-screen h-fit flex bg-gradient-to-b from-[#091645] to-[#2a2575] bg">
         {children}
         <Particle />
       </body>
