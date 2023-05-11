@@ -2,6 +2,7 @@ import Particle from "../components/particle";
 import "./globals.css";
 import React from "react";
 import * as dotenv from "dotenv";
+
 dotenv.config();
 
 export const metadata = {

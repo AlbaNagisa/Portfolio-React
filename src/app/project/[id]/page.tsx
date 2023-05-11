@@ -1,6 +1,5 @@
 "use client";
 import React, { FC, useEffect, useState } from "react";
-import { ThreeCircles } from "react-loader-spinner";
 import BackArrowIcon from "../../../public/back-arrow-icon.svg";
 import GithubIcon from "../../../public/iconmonstr-github-1.svg";
 import Image from "next/image";
@@ -9,6 +8,7 @@ import Link from "next/link";
 import PieLanguages from "@/components/PieLanguages";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import Loading from "@/components/Loading";
 
 interface pageProps {
   params: {
@@ -27,6 +27,7 @@ interface dataT {
 }
 type Github = {
   url: string;
+  repoName: string;
 };
 const Page: FC<pageProps> = ({ params }) => {
   const [data, setData] = useState<dataT | null>(null);
@@ -48,25 +49,15 @@ const Page: FC<pageProps> = ({ params }) => {
     setIsLoading(true);
     onLoad();
   }, [params.id]);
-
+  const showPie = () => {
+    if (data != undefined && data.github != undefined)
+      return (
+        <PieLanguages owner="AlbaNagisa" repoName={data?.github.repoName} />
+      );
+  };
   const showDetails = () => {
     if (isLoading) {
-      return (
-        <div className="spinner-container">
-          <ThreeCircles
-            height="100"
-            width="100"
-            color="#4f009e"
-            wrapperStyle={{}}
-            wrapperClass=""
-            visible={true}
-            ariaLabel="three-circles-rotating"
-            outerCircleColor=""
-            innerCircleColor=""
-            middleCircleColor=""
-          />
-        </div>
-      );
+      return <Loading />;
     }
 
     //  top left of my page i want Go Back clickable div
@@ -84,10 +75,10 @@ const Page: FC<pageProps> = ({ params }) => {
             <h1 className="text-white text-xl ml-4">Accueil</h1>
           </div>
         </Link>
-        <div className="flex flex-wrap w-full justify-center mt-20 mb-[-40px]">
+        <div className="flex flex-wrap w-full justify-center mt-10 mb-10">
           <h1 className="flex flex-wrap text-5xl text-white">{data?.title}</h1>
         </div>
-        <div className="flex flex-col h-fit w-[auto] items-center mt-20 pb-20">
+        <div className="flex flex-col h-fit w-[auto] items-center pb-20 ">
           <div
             style={{
               background:
@@ -115,9 +106,7 @@ const Page: FC<pageProps> = ({ params }) => {
                     </li>
                   ))}
                 </ul>
-                <div className="mt-10">
-                  <PieLanguages />
-                </div>
+                <div className="mt-10">{showPie()}</div>
               </div>
               <div className="justify-center items-center flex flex-col w-full ml-60">
                 <div className="pb-5">

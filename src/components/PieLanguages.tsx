@@ -8,10 +8,16 @@ import hexRgb from "hex-rgb";
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
 });
-import { Chart, ArcElement, Tooltip, Title } from "chart.js";
-Chart.register(ArcElement, Tooltip, Title);
+import { Chart, ArcElement, Tooltip, Title, Legend } from "chart.js";
+import Loading from "./Loading";
+Chart.register(ArcElement, Tooltip, Title, Legend);
 
-export default function PieLanguages() {
+interface Props {
+  owner: string;
+  repoName: string;
+}
+
+export default function PieLanguages(props: Props) {
   const [githubData, setGithubData] = useState<void | OctokitResponse<
     { [key: string]: number | undefined },
     200
@@ -22,8 +28,8 @@ export default function PieLanguages() {
     async function onLoad() {
       await octokit
         .request("GET /repos/{owner}/{repo}/languages", {
-          owner: "AlbaNagisa",
-          repo: "anemyapp",
+          owner: props.owner ?? "AlbaNagisa",
+          repo: props.repoName,
           headers: {
             "X-GitHub-Api-Version": "2022-11-28",
           },
@@ -57,8 +63,10 @@ export default function PieLanguages() {
       labels: Object.keys(githubData.data),
       datasets: [
         {
-          label: "Percentage",
-          data: Object.values(githubData.data),
+          data: Object.values(githubData.data).map(
+            (value) => Math.floor((value ?? 0) / 10) / 100
+          ),
+          label: "%",
           backgroundColor: colors,
           borderColor: borderColor,
           borderWidth: 1,
@@ -68,6 +76,17 @@ export default function PieLanguages() {
     const options = {
       responsive: true,
       plugins: {
+        legend: {
+          display: true,
+          position: "bottom" as const,
+          labels: {
+            color: "white",
+          },
+          font: {
+            size: 14,
+            family: "Poppins",
+          },
+        },
         title: {
           align: "start" as const,
           display: true,
@@ -83,5 +102,5 @@ export default function PieLanguages() {
 
     return <Pie options={options} data={data} />;
   }
-  return <div>Loading..</div>;
+  return <Loading />;
 }
