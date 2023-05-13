@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useId, useRef, useState } from "react";
 import Container from "../components/container";
 import Card from "../components/card";
 import Loading from "@/components/Loading";
@@ -7,6 +7,12 @@ import Category from "@/components/Category";
 import Typed from "typed.js";
 import { Tilt } from "react-tilt";
 import Switch from "react-switch";
+import Image from "next/image";
+import SmilingFace from "@/public/IMG_0256.png";
+import { Fade } from "react-awesome-reveal";
+import Skills from "@/components/Skills";
+import dynamic from "next/dynamic";
+const Timeline = dynamic(() => import("@/components/Timeline"), { ssr: false });
 
 export default function Page() {
   type cardDataType = {
@@ -61,28 +67,13 @@ export default function Page() {
     } else {
       return data.map((cardData: cardDataType) => {
         return (
-          <Tilt
-            options={{
-              reverse: true,
-              max: 35,
-              perspective: 1000,
-              scale: 1.1,
-              speed: 3000,
-              transition: true,
-              axis: null,
-              reset: true,
-              easing: "cubic-bezier(.03,.98,.52,.99)",
-            }}
-            className="w-[25%] h-fit m-6 gap-6 rounded-3xl text-white flex flex-col shadow-[-20px_20px_0px_0px_rgba(0,0,0,0.25)]"
+          <Card
             key={cardData.id}
-          >
-            <Card
-              title={cardData.title}
-              images={cardData.images}
-              desc={cardData.body}
-              id={cardData.id}
-            />
-          </Tilt>
+            title={cardData.title}
+            images={cardData.images}
+            desc={cardData.body}
+            id={cardData.id}
+          />
         );
       });
     }
@@ -100,14 +91,14 @@ export default function Page() {
       return <></>;
     }
   };
+
   return (
     <div className="flex h-screen w-screen flex-col ">
       <div className="flex h-fit mt-16 ml-32 mr-32 w-auto flex-col">
         <div className="flex flex-row w-auto justify-between min-h-[10vh] items-center">
-          <Container width="20%" height="100%" title="AlbaNagisa" />
+          <Container width="20%" height="100%" title="Alban Girardi" />
           <div className="flex-row flex text-white">
             <h1 className=" text-xl mr-5" ref={elA}></h1>
-
             <Switch
               onChange={() => setIsAnimation(!isAnimation)}
               checked={isAnimation}
@@ -121,36 +112,70 @@ export default function Page() {
           </div>
         </div>
         <div className="flex flex-col  justify-center items-center h-fit mt-24">
-          {/*  <Category name="A propos de moi" /> */}
           <div className="justify-center items-center flex flex-col w-[50%] text-white pb-10">
             <Category name="A propos de moi" />
-            <h1
-              style={{
-                display: isAnimation ? "none" : "flex",
-              }}
-              className="w-full h-fit flex-col align-middle text-justify justify-center text-xl"
-            >
-              Hey, moi c&apos;est Alban et je suis un jeune développeur de 18
-              ans ! Je suis passionné par le backend et je développe
-              principalement en JavaScript en utilisant des frameworks tels que
-              Next.js. En ce moment, je suis étudiant à Lyon Ynov Campus et je
-              suis à la recherche d&apos;un stage pour renforcer mes compétences
-              et acquérir une expérience professionnelle. N&apos;hésitez pas à
-              me contacter ! Je serais ravi de discuter avec vous.
-            </h1>
-            <div
-              style={{
-                display: isAnimation ? "flex" : "none",
-              }}
-              className="w-full h-[3vh] flex-row align-middle text-justify justify-center"
-            >
-              <h1 className=" text-xl" ref={el}></h1>
+            <div className="flex flex-row items-center justify-start w-full">
+              <div className="ml-10 h-full items-start">
+                <Image
+                  alt="myface"
+                  src={SmilingFace}
+                  width={250}
+                  height={250}
+                />
+              </div>
+              <h1
+                style={{
+                  display: isAnimation ? "none" : "flex",
+                }}
+                className="w-full h-fit flex-col align-middle text-justify justify-center text-xl ml-5"
+              >
+                Hey, moi c&apos;est Alban et je suis un jeune développeur de 18
+                ans ! Je suis passionné par le backend et je développe
+                principalement en JavaScript en utilisant des frameworks tels
+                que Next.js. En ce moment, je suis étudiant à Lyon Ynov Campus
+                et je suis à la recherche d&apos;un stage pour renforcer mes
+                compétences et acquérir une expérience professionnelle.
+                N&apos;hésitez pas à me contacter ! Je serais ravi de discuter
+                avec vous.
+              </h1>
+              <div
+                style={{
+                  display: isAnimation ? "flex" : "none",
+                }}
+                className="w-full h-[3vh] flex-row  text-justify ml-5 "
+              >
+                <h1 className=" text-xl" ref={el}></h1>
+              </div>
             </div>
           </div>
-          <Category name="Mes projets" />
-          <div className="flex flex-wrap min-h-screen justify-around w-full">
-            {showCard()}
-          </div>
+          <>
+            <Fade>
+              <Category name="Mes compétences" />
+            </Fade>
+            <div className="flex flex-row justify-around w-full flex-wrap">
+              <Skills title="Frontend" placement="bottom" />
+              <Skills title="Backend" placement="bottom" />
+              <Skills title="Database" placement="bottom" />
+              <Skills title="Autre" placement="bottom" />
+            </div>
+          </>
+          <>
+            <Fade>
+              <Category name="Mes expériences" />
+            </Fade>
+
+            <div style={{ width: "700px", height: "500px" }}>
+              <Timeline />
+            </div>
+          </>
+          <>
+            <Fade>
+              <Category name="Mes projets" />
+            </Fade>
+            <div className="flex flex-wrap min-h-screen justify-around w-full">
+              {showCard()}
+            </div>
+          </>
         </div>
       </div>
     </div>
