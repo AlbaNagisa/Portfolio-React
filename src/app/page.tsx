@@ -1,11 +1,10 @@
 "use client";
-import React, { useEffect, useId, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Container from "../components/container";
 import Card from "../components/card";
 import Loading from "@/components/Loading";
 import Category from "@/components/Category";
 import Typed from "typed.js";
-import { Tilt } from "react-tilt";
 import Switch from "react-switch";
 import Image from "next/image";
 import SmilingFace from "@/public/IMG_0256.png";
@@ -78,20 +77,18 @@ export default function Page() {
       });
     }
   };
-
   const showAnimation = () => {
-    if (!isAnimation && typed !== null) {
+    if (isAnimation && typed !== null) {
       typed.cursor.style.display = "none";
       typed.stop();
-      return <></>;
+      return;
     }
-    if (typed !== null && isAnimation) {
+    if (typed !== null && !isAnimation) {
       typed.cursor.style.display = "block";
       typed.start();
-      return <></>;
+      return;
     }
   };
-
   return (
     <div className="flex h-screen w-screen flex-col ">
       <div className="flex h-fit mt-16 ml-32 mr-32 w-auto flex-col">
@@ -100,7 +97,7 @@ export default function Page() {
           <div className="flex-row flex text-white">
             <h1 className=" text-xl mr-5" ref={elA}></h1>
             <Switch
-              onChange={() => setIsAnimation(!isAnimation)}
+              onChange={(v) => (setIsAnimation(v), showAnimation())}
               checked={isAnimation}
               onColor="#122675"
               offColor="#3d4b80"
