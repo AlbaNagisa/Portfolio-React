@@ -23,9 +23,7 @@ export default function Skills(props: Props) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [data, setData] = useState<DataType[] | null>(null);
   useEffect(() => {
-    fetch(
-      `http://localhost:5050/api/skills/645e745819fe014f1c75c0da/${props.title}`
-    )
+    fetch(`/api/skills/645e745819fe014f1c75c0da/${props.title}`)
       .then((res) => res.json())
       .then((value) => (setData(value), setIsLoaded(true)));
   }, [props.title]);

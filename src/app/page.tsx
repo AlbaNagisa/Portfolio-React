@@ -34,7 +34,7 @@ export default function Page() {
   const [isAnimation, setIsAnimation] = useState<boolean>(true);
   useEffect(() => {
     setIsLoading(true);
-    fetch("http://localhost:5050/api/projects/")
+    fetch("http://31.220.95.3:5050/api/projects")
       .then((res) => res.json())
       .then((value) => {
         setIsLoading(false);
