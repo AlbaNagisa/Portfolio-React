@@ -8,6 +8,7 @@ import hexRgb from "hex-rgb";
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
 });
+
 import { Chart, ArcElement, Tooltip, Title, Legend } from "chart.js";
 import Loading from "./Loading";
 Chart.register(ArcElement, Tooltip, Title, Legend);
@@ -42,7 +43,7 @@ export default function PieLanguages(props: Props) {
     }
     setIsLoadingGithub(true);
     onLoad();
-  }, []);
+  }, [props.owner, props.repoName]);
 
   const colors = [];
   const borderColor = [];
@@ -58,14 +59,24 @@ export default function PieLanguages(props: Props) {
         `rgba(${hexToRgb.red}, ${hexToRgb.green}, ${hexToRgb.blue}, 0.2)`
       );
     }
+    const total = Object.values(githubData.data).reduce((a, b) => {
+      if (a == undefined || b == undefined) return 0;
+      return (a as number) + (b as number);
+    }, 0);
 
+    for (const key of Object.keys(githubData.data)) {
+      githubData.data[key] =
+        Math.round(
+          ((githubData.data[key] as number) /
+            (total == undefined ? 1 : total)) *
+            1000
+        ) / 10;
+    }
     const data = {
       labels: Object.keys(githubData.data),
       datasets: [
         {
-          data: Object.values(githubData.data).map(
-            (value) => Math.floor((value ?? 0) / 10) / 100
-          ),
+          data: Object.values(githubData.data),
           label: "%",
           backgroundColor: colors,
           borderColor: borderColor,

@@ -11,6 +11,12 @@ import SmilingFace from "@/public/IMG_0256.png";
 import { Fade } from "react-awesome-reveal";
 import Skills from "@/components/Skills";
 import dynamic from "next/dynamic";
+import ContactForm from "@/components/ContactForm";
+import GithubIcon from "@/public/github.svg";
+import CVimg from "@/public/cv.png";
+import Link from "next/link";
+import Linkedin from "@/public/linkedin.png";
+
 const Timeline = dynamic(() => import("@/components/Timeline"), { ssr: false });
 
 export default function Page() {
@@ -94,18 +100,40 @@ export default function Page() {
       <div className="flex h-fit mt-16 ml-32 mr-32 w-auto flex-col">
         <div className="flex flex-row w-auto justify-between min-h-[10vh] items-center">
           <Container width="20%" height="100%" title="Alban Girardi" />
-          <div className="flex-row flex text-white">
-            <h1 className=" text-xl mr-5" ref={elA}></h1>
-            <Switch
-              onChange={(v) => (setIsAnimation(v), showAnimation())}
-              checked={isAnimation}
-              onColor="#122675"
-              offColor="#3d4b80"
-              activeBoxShadow="true"
-              uncheckedIcon={<div></div>}
-              checkedIcon={<div></div>}
-              className="shadow-[-7px_7px_3px_0px_rgba(0,0,0,0.25)]"
-            />
+          <div className="flex flex-row items-center">
+            <div className="mr-6 flex flex-row">
+              <Link href="/cv" className="mr-2">
+                <Image alt="cv" src={CVimg} width={45} height={45} />
+              </Link>
+              <Link
+                target="_blank"
+                href="https://www.linkedin.com/in/alban-girardi-8b1aa723a/"
+                className="mr-2"
+              >
+                <Image alt="linkedin" src={Linkedin} width={45} height={45} />
+              </Link>
+              <Link target="_blank" href="https://github.com/albanagisa">
+                <Image
+                  alt="githubicon"
+                  src={GithubIcon}
+                  width={45}
+                  height={45}
+                />
+              </Link>
+            </div>
+            <div className="flex-row flex text-white">
+              <h1 className=" text-xl mr-5" ref={elA}></h1>
+              <Switch
+                onChange={(v) => (setIsAnimation(v), showAnimation())}
+                checked={isAnimation}
+                onColor="#122675"
+                offColor="#3d4b80"
+                activeBoxShadow="true"
+                uncheckedIcon={<div></div>}
+                checkedIcon={<div></div>}
+                className="shadow-[-7px_7px_3px_0px_rgba(0,0,0,0.25)]"
+              />
+            </div>
           </div>
         </div>
         <div className="flex flex-col  justify-center items-center h-fit mt-24">
@@ -154,6 +182,7 @@ export default function Page() {
               <Skills title="Backend" placement="bottom" />
               <Skills title="Database" placement="bottom" />
               <Skills title="Autre" placement="bottom" />
+              <Skills title="Framework" placement="bottom" />
             </div>
           </>
           <>
@@ -169,8 +198,21 @@ export default function Page() {
             <Fade>
               <Category name="Mes projets" />
             </Fade>
-            <div className="flex flex-wrap min-h-screen justify-around w-full">
+            <div className="flex flex-wrap h-fit justify-around w-full">
               {showCard()}
+            </div>
+          </>
+          <>
+            <Fade>
+              <Category name="Me contacter" />
+            </Fade>
+            <div className="flex flex-col items-center justify-around w-full pb-60">
+              <ContactForm />
+            </div>
+          </>
+          <>
+            <div className="text-white text-xs">
+              © 2023 - Alban Girardi - Tous droits réservés
             </div>
           </>
         </div>

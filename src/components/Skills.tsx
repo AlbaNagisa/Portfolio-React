@@ -31,21 +31,31 @@ export default function Skills(props: Props) {
   }, [props.title]);
   if (!isLoaded || data === null) return <Loading />;
   return (
-    <div className="flex flex-col justify-center items-center h-fit w-[50%]  pb-10">
+    <div className="flex flex-col justify-center items-center h-fit w-[40%]  pb-10">
       <Fade>
         <h1 className="text-white text-2xl pb-2">{props.title}</h1>
       </Fade>
 
-      <div className="flex flex-row justify-center items-center  flex-wrap">
+      <div className="flex flex-row w-full justify-around items-center flex-wrap">
         {data.map((d, index) => (
           <Tilt
             key={index}
             options={{ max: 25 }}
-            style={{ height: 125, width: 125 }}
+            style={{ height: 125, width: 125, margin: 5 }}
           >
-            <Fade>
-              <Tooltip title={d.name} placement={props.placement as Placement}>
-                <Image alt="image" src={d.image} width={125} height={125} />
+            <Fade className="flex w-full h-full justify-center items-center">
+              <Tooltip
+                className="flex  justify-center items-center"
+                title={d.name}
+                placement={props.placement as Placement}
+              >
+                <Image
+                  className="self-center items-center flex w-full "
+                  alt="image"
+                  src={d.image}
+                  width={125}
+                  height={125}
+                />
               </Tooltip>
             </Fade>
           </Tilt>
