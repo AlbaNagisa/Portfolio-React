@@ -7,6 +7,11 @@ const Timeline = () => {
       <Chrono
         items={[
           {
+            title: "2023 - 2024",
+            cardTitle: "Ma Question Medicale",
+            cardSubtitle: `Stage en développement web et IOT de validation de fin de Bachelor 2`,
+          },
+          {
             title: "2022 - 2025",
             cardTitle: "Lyon Ynov Campus",
             cardSubtitle: `Bachelor Informatique`,

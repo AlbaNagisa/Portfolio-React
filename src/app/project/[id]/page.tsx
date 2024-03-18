@@ -36,7 +36,7 @@ const Page: FC<pageProps> = ({ params }) => {
 
   useEffect(() => {
     async function onLoad() {
-      await fetch(`/api/projects/${params.id}`)
+      await fetch(`${process.env.API_URL}/api/projects/${params.id}`)
         .then((res) => res.json())
         .then(async (value) => {
           setData(value);

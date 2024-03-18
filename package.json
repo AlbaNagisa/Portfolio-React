@@ -6,7 +6,8 @@
     "dev": "gnome-terminal -- node /home/alban/Documents/api/apiPortfolio/dist/src/index.js && next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "npm run build && npm run start"
   },
   "dependencies": {
     "@emotion/react": "^11.11.0",

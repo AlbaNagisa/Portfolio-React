@@ -34,7 +34,7 @@ export default function Page() {
   const [isAnimation, setIsAnimation] = useState<boolean>(true);
   useEffect(() => {
     setIsLoading(true);
-    fetch("http://31.220.95.3:5050/api/projects")
+    fetch(`${process.env.API_URL}/api/projects`)
       .then((res) => res.json())
       .then((value) => {
         setIsLoading(false);
@@ -46,7 +46,7 @@ export default function Page() {
         "Moi c'est Alban",
         `jeune développeur de 18 ans.`,
         `Actuellement étudiant à Lyon Ynov Campus.`,
-        "Je suis à la recherche d'un stage" /*  pour renforcer mes compétences et acquérir une expérience professionnelle "*/,
+        "Je suis à la recherche d'une alternance" /*  pour renforcer mes compétences et acquérir une expérience professionnelle "*/,
         "N'hésitez pas à me contacter !",
       ],
       typeSpeed: 40,
@@ -158,8 +158,8 @@ export default function Page() {
                 ans ! Je suis passionné par le backend et je développe
                 principalement en JavaScript en utilisant des frameworks tels
                 que Next.js. En ce moment, je suis étudiant à Lyon Ynov Campus
-                et je suis à la recherche d&apos;un stage pour renforcer mes
-                compétences et acquérir une expérience professionnelle.
+                et je suis à la recherche d&apos;une alternance pour renforcer
+                mes compétences et acquérir une expérience professionnelle.
                 N&apos;hésitez pas à me contacter ! Je serais ravi de discuter
                 avec vous.
               </h1>
@@ -190,7 +190,9 @@ export default function Page() {
               <Category name="Mes expériences" />
             </Fade>
 
-            <div style={{ width: "700px", height: "500px" }}>
+            <div
+              style={{ width: "700px", height: "500px", marginBottom: "4%" }}
+            >
               <Timeline />
             </div>
           </>
